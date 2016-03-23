@@ -1,0 +1,43 @@
+*&---------------------------------------------------------------------*
+*& Report  Z_SSABAP_ALV
+*&
+*&---------------------------------------------------------------------*
+*&
+*&
+*&---------------------------------------------------------------------*
+
+REPORT  Z_SSABAP_ALV.
+
+"http://zevolving.com/2014/07/salv-various-ways-access-columns/
+"http://abapmentor.expertise-team.com/post/display-alv-list-easily-in-abap-using-cl-salv-table-part-iv-individual-column-settings.aspx
+
+TYPES: BEGIN OF table_row,
+  firstname TYPE string,
+  lastname TYPE string,
+  END OF table_row.
+
+DATA: itab TYPE STANDARD TABLE OF table_row,
+      wa LIKE LINE OF itab.
+
+wa-firstname = 'Ala'.
+wa-lastname = 'Makota'.
+APPEND wa TO itab.
+
+wa-firstname = 'Ola'.
+wa-lastname = 'Doprzedszkola'.
+APPEND wa TO itab.
+
+DATA alv TYPE REF TO cl_salv_table.
+
+cl_salv_table=>factory(
+  IMPORTING
+    r_salv_table = alv
+  CHANGING
+    t_table = itab
+    ).
+
+alv->get_columns( )->set_optimize( ).
+
+alv->get_functions( )->set_all( ).
+
+alv->display( ).
