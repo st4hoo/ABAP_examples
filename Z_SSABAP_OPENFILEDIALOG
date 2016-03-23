@@ -1,0 +1,30 @@
+*&---------------------------------------------------------------------*
+*& Report  Z_SSABAP_OPENFILEDIALOG
+*&
+*&---------------------------------------------------------------------*
+*&
+*&
+*&---------------------------------------------------------------------*
+
+REPORT  z_ssabap_openfiledialog.
+
+DATA:
+      lt_filetab      TYPE filetable,
+      lv_rc           TYPE i.
+
+FIELD-SYMBOLS <wa_filetab> LIKE LINE OF lt_filetab.
+
+cl_gui_frontend_services=>file_open_dialog(
+      EXPORTING
+        multiselection = 'X'
+      CHANGING
+        file_table              = lt_filetab
+        rc                      = lv_rc
+    ).
+
+WRITE: 'Selected files:'.
+NEW-LINE.
+
+LOOP AT lt_filetab ASSIGNING <wa_filetab>.
+  WRITE: 'file: ', <wa_filetab>-filename.
+ENDLOOP.
