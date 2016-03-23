@@ -1,0 +1,17 @@
+*&---------------------------------------------------------------------*
+*& Report  Z_SSABAP_CL_ABAP_BROWSER
+*&
+*&---------------------------------------------------------------------*
+*&
+*&
+*&---------------------------------------------------------------------*
+
+REPORT  Z_SSABAP_CL_ABAP_BROWSER.
+
+
+cl_abap_browser=>show_html(
+      html_string = '<html><body><script>alert("JS test");</script></body></html>'
+      size        = cl_abap_browser=>small
+      title       = 'example'
+      position    = cl_abap_browser=>middle
+      context_menu = 'X' ).
